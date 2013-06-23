@@ -1,0 +1,8 @@
+{
+	"message":"Hello ca",
+	"dialog":"false",
+	"beep":{"dialog":"true","tray":"false","list":"false"},
+	"vibrate":{"dialog":"true","tray":"false","list":"false"},
+	"notificationtray":"true",
+	"notificationtrayclick":"false"
+}

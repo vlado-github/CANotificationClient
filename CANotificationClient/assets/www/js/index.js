@@ -57,13 +57,13 @@ var app = {
             }
         }
         channel.bind('my-event', handleMyEvent);
+
+        //handle notification
         function handleMyEvent( data ) {
-            var currentTime = new Date();
-            var currentTimeStr = currentTime.toString("MM/dd/yyyy")+" "+currentTime.toString("hh:mm:ss tt");
-            $('#myEventData').append('<li>' + JSON.stringify(data, null, 2) + "<br/>"+currentTimeStr + '</li>');
-            navigator.notification.alert(JSON.stringify(data, null, 2), null, "Alert", "OK");
-            navigator.notification.beep(1);
-            navigator.notification.vibrate(1000);
+            console.log(JSON.stringify(data.message, null, 2));
+            notificationController.previewNotificationInAppList(data);
+            notificationController.previewNotificationInDialog(data);
+            notificationController.previewNotificationInTray(data);
         }
     }
 };

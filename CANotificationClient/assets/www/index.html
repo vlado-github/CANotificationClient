@@ -32,7 +32,7 @@
             <h1 id="pageTitle">Notifications</h1>
             <span id="connectionStatus" style="color:red">unavailable</span>
         </div>
-        <div title="Scroller" id="content" class="panel" id="webslider" js-scrolling="yes" style="overflow: auto; display: block; -webkit-transform: none; -webkit-backface-visibility: hidden; -webkit-transition: none; transition: none; -webkit-transform-origin: 0% 0%;"><div class="jqmScrollPanel" js-scrolling="yes" style="overflow: visible; -webkit-transform: translate3d(0px, 0px, 0); -webkit-transition: 0ms linear; transition: 0ms linear;">
+        <div title="Scroller" id="content" class="panel" id="webslider" js-scrolling="yes" style="overflow: auto; display: block; -webkit-transform: none; -webkit-backface-visibility: hidden; -webkit-transition: none; transition: none; -webkit-transform-origin: 0% 0%;">
             <div class="jqmScrollPanel" js-scrolling="yes"
                  style="-webkit-transform: translate3d(0px, 0px, 0); -webkit-transition: 0ms linear; transition: 0ms linear;">
                 <ul id="myEventData"></ul>
@@ -41,10 +41,12 @@
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/notificationcontroller.js"></script>
         <script type="text/javascript" src="js/libs/websocket.js"></script>
         <script type="text/javascript" src="js/libs/date.js"></script>
         <script type="text/javascript" src="js/libs/jquery-1.10.1.min.js"></script>
         <script type="text/javascript" src="js/libs/pusher.min.js"></script>
+        <script type="text/javascript" src="js/libs/statusbarnotification.js"></script>
         <script type="text/javascript">
             app.initialize();
         </script>
