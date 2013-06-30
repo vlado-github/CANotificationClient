@@ -49,6 +49,7 @@ var NotificationMessenger = function() { }
          this.activeNotification = new window.Notification(title, options);
      }
  }
+
 /*NotificationMessenger.prototype.notify = function(title, body, flag) {
     if (window.Notification) {
         this.activeNotification = new window.Notification(title, {
@@ -85,23 +86,31 @@ if (typeof window.Notification == 'undefined') {
      * @param options
      */
     window.Notification = function(title, options) {
+        var notificationConfig = new Object();
         options = options || {};
-        this.tag = options.tag || 'defaultTag';
+        //this.tag = options.tag || 'defaultTag';
+          notificationConfig.tag = options.tag || 'defaultTag';
+
 
         // Add this notification to the global index by tag.
-        window.Notification.active[this.tag] = this;
+        //window.Notification.active[this.tag] = this;
+        window.Notification.active[notificationConfig.tag] = notificationConfig;
 
         // May be undefined.
-        this.onclick = options.onclick;
+       /* this.onclick = options.onclick;
         this.onerror = options.onerror;
         this.onshow = options.onshow;
-        this.onclose = options.onclose;
+        this.onclose = options.onclose;*/
+        notificationConfig.onclick = options.onclick;
+        notificationConfig.onerror = options.onerror;
+        notificationConfig.onshow = options.onshow;
+        notificationConfig.onclose = options.onclose;
 
         var content = options.body || '';
         
         var flag = options.flag || '';
 
-        cordova.exec(function() {
+        /*cordova.exec(function() {
             if (this.onshow) {
                 this.onshow();
             }
@@ -109,7 +118,17 @@ if (typeof window.Notification == 'undefined') {
             if (this.onerror) {
                 this.onerror(error);
             }
-        }, 'StatusBarNotification', 'notify', [this.tag, title, content, flag]);
+        }, 'StatusBarNotification', 'notify', [this.tag, title, content, flag]);*/
+        cordova.exec(function() {
+            if (notificationConfig.onshow) {
+                notificationConfig.onshow();
+            }
+        }, function(error) {
+            if (notificationConfig.onerror) {
+                notificationConfig.onerror(error);
+            }
+        }, 'StatusBarNotification', 'notify', [notificationConfig.tag, title, content, flag]);
+
     };
 
     // Permission is always granted on Android.
@@ -121,10 +140,8 @@ if (typeof window.Notification == 'undefined') {
 
     // Not part of the W3C API. Used by the native side to call onclick handlers.
     window.Notification.callOnclickByTag = function(tag) {
-        console.log('callOnclickByTag');
         var notification = window.Notification.active[tag];
         if (notification && notification.onclick && typeof notification.onclick == 'function') {
-            console.log('inside if');
             notification.onclick();
         }
     };

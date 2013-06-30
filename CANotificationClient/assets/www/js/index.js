@@ -19,11 +19,6 @@
 
 var app = {
 
-
-    APP_KEY: function() {
-        return 'API_KEY';
-    },
-
     // Application Constructor
     initialize: function() {
         this.bindEvents();
@@ -34,36 +29,7 @@ var app = {
     },
 
     onDeviceReady: function() {
-
-        var connStatus = '';
-
         // Connect
-        var pusher = new Pusher(app.APP_KEY());
-        pusher.connection.bind('state_change', connectionStateChange);
-        function connectionStateChange(state) {
-            connStatus = state.current;
-        }
-
-        // Subscribe
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('pusher:subscription_succeeded', subscriptionSucceeded);
-        function subscriptionSucceeded() {
-            if(connStatus == "connected"){
-                $('#connectionStatus').css("color","green");
-                $('#connectionStatus').text(connStatus);
-            }else{
-                $('#connectionStatus').css("color","red");
-                $('#connectionStatus').text("unavailable");
-            }
-        }
-        channel.bind('my-event', handleMyEvent);
-
-        //handle notification
-        function handleMyEvent( data ) {
-            console.log(JSON.stringify(data.message, null, 2));
-            notificationController.previewNotificationInAppList(data);
-            notificationController.previewNotificationInDialog(data);
-            notificationController.previewNotificationInTray(data);
-        }
+        notificationController.connect();
     }
 };
