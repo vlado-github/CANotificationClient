@@ -4,7 +4,7 @@
 var notificationController = {
 
     APP_KEY: function() {
-            return <API_KEY>;
+            return 'a247f9dd8328ce03ba6d';
     },
 
     connect : function(){

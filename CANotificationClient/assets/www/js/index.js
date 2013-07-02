@@ -30,6 +30,7 @@ var app = {
 
     onDeviceReady: function() {
         // Connect
+        console.log("DEVICE READY");
         notificationController.connect();
     }
 };
