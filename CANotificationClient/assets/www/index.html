@@ -30,7 +30,8 @@
     <body>
         <div id="header" class="hasMenu.to-on">
             <h1 id="pageTitle">Notifications</h1>
-            <span id="connectionStatus" style="color:red; font-size:14pt" >unavailable</span>
+            <span id="connectionStatus" style="color:red; font-size:16pt; height:48px;" >unavailable</span></td>
+            <a class="button" id="clearButton" onclick="$('#notification-history').clear();">Clear</a>
         </div>
         <div title="Scroller" id="content" class="panel" id="webslider" js-scrolling="yes" style="overflow: auto; display: block; -webkit-transform: none; -webkit-backface-visibility: hidden; -webkit-transition: none; transition: none; -webkit-transform-origin: 0% 0%;">
             <div class="jqmScrollPanel" js-scrolling="yes"

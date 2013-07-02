@@ -133,7 +133,7 @@ z-index:2;
 	height:48px; 
 	font-family: Helvetica, Arial, sans-serif;
 	font-weight:normal;
-	font-size:24px;
+	font-size:28px;
 	line-height:48px;
 	text-shadow:rgba(0,0,0,0.8) 0px -1px 0px 1px;
 	text-align:center;
@@ -162,6 +162,17 @@ z-index:2;
 	overflow:hidden;
 	text-overflow:ellipsis;
 } /* sets up sizing and handling of excess text for the type in the back button */
+
+#clearButton{
+    font-size:16pt;
+    display:block;
+    position:absolute;
+    right:0px;
+    top:0px;
+    width:120px;
+    height:48px;
+    text-overflow:ellipsis;
+}
 
 .button {
     z-index:1;
@@ -412,7 +423,7 @@ font-size:48px;
 }
 
 #menu  .title {
-	font-size:16px;
+	font-size:20px;
 	border-bottom:2px solid #333;
 	margin-bottom:3px; 
 	font-weight:bold;

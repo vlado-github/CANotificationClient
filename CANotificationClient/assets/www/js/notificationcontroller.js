@@ -38,10 +38,15 @@ var notificationController = {
     previewNotification : function(data){
 
          /* Adds notification to the application list of received notifications. */
+        if($('#notification-history li').length > 9){
+             $('#notification-history li:last-child').remove();
+        }
         var currentTime = new Date();
         var currentTimeStr = currentTime.toString("MM/dd/yyyy")+" "+currentTime.toString("hh:mm:ss tt");
-        $('#notification-history').append('<li>' + JSON.stringify(data.message, null, 2) + "<br/>"+currentTimeStr + '</li>');
+
+        $('#notification-history').prepend('<li>' + JSON.stringify(data.message, null, 2) + "<br/>"+currentTimeStr + '</li>');
         notificationController.soundHelper(data.beep.list, data.vibrate.list);
+
 
         /* Previews notification in a dialog. */
         if(data.dialog == "true"){
