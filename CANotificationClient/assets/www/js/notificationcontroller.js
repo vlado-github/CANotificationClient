@@ -3,33 +3,8 @@
 
 var notificationController = {
 
-    APP_KEY: function() {
-            return 'a247f9dd8328ce03ba6d';
-    },
-
-    connect : function(){
-        //connect
-        var pusher = new Pusher(notificationController.APP_KEY());
-        var connStatus = '';
-        pusher.connection.bind('state_change',function(state){
-            connStatus = state.current;
-        });
-
-        //subscribe
-        var channel = pusher.subscribe('my-channel');
-        channel.bind('pusher:subscription_succeeded',function(){
-            if(connStatus == "connected"){
-                $('#connectionStatus').css("color","lime");
-                $('#connectionStatus').text(connStatus);
-            }else{
-                $('#connectionStatus').css("color","red");
-                $('#connectionStatus').text("unavailable");
-            }
-        });
-        channel.bind('my-event', notificationController.handleMyEvent);
-    },
-
-    handleMyEvent : function( data ) {
+    /* Callback from pusher service returning notification data */
+    handleEvent : function( data ) {
         notificationController.previewNotification(data);
     },
 
@@ -51,9 +26,12 @@ var notificationController = {
         /* Previews notification in a dialog. */
         if(data.dialog == "true"){
            navigator.notification.alert(JSON.stringify(data.message, null, 2),
-               function(){
-                  if(pusher.connection.state!="connected")
-                    notificationController.connect();
+               function(){            // on dialog confirm
+                    if(connectionManager.getConnStatus()=="disconnected" ||
+                        connectionManager.getConnStatus()=="unavailable"){
+                        console.log(connectionManager.getConnStatus());
+                        connectionManager.connect();
+                      }
                },
                "Message",
                "OK");
@@ -63,10 +41,16 @@ var notificationController = {
         /* Previews notification in a notification bar. */
         if(data.notificationtray == "true"){
            var setup = new Object();
-           setup.onclick = function(){
+           setup.onclick = function(){       // on dialog confirm
                 navigator.notification.alert(
                    JSON.stringify(data.message, null, 2),
-                   null,
+                   function(){
+                      if(connectionManager.getConnStatus()=="disconnected" ||
+                            connectionManager.getConnStatus()=="unavailable"){
+                        console.log("CONN STATUS:"+connectionManager.getConnStatus());
+                        connectionManager.connect();
+                      }
+                   },
                    "Message",
                    "OK"
                 );
@@ -79,12 +63,6 @@ var notificationController = {
 
     },
 
-    // on dialog confirm
-    confirmNotificationInTrayClick : function(){
-        if(pusher.connection.state!="connected")
-            notificationController.connect();
-    },
-
     /* Plays sound or vibration */
     soundHelper : function(beep,vibrate){
         if(beep == "true"){
@@ -93,6 +71,11 @@ var notificationController = {
         if(vibrate == "true") {
             navigator.notification.vibrate(1000);
         }
+    },
+
+    /* Remove all notifications' messages from the list */
+    clearNotificationList : function(){
+        $('#notification-history').empty();
     }
 
 };
